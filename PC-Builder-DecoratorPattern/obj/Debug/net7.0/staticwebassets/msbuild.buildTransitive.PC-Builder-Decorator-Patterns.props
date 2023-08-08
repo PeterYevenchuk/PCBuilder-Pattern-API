@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\PC-Builder-Decorator-Patterns.props" />
+</Project>
