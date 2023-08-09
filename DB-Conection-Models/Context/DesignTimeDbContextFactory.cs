@@ -9,7 +9,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<PCDbContex
     public PCDbContext CreateDbContext(string[] args)
     {
         IConfigurationRoot configuration = new ConfigurationBuilder()
-            .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "..", "PC-Builder-DecoratorPattern", "PC-Builder-DecoratorPattern"))
+            .SetBasePath("D:\\MyCodeC#.NET\\Git\\PCBuilder-Patterns-API\\PC-Builder-Decorator-Pattern\\PC-Builder-DecoratorPattern")
             .AddJsonFile("appsettings.json")
             .Build();
 

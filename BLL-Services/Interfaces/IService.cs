@@ -5,7 +5,7 @@ public interface IService<T>
 {
     public List<T> Get();
     public T GetById(int id);
-    public T Insert(T entity);
-    public T Update(T entity);
-    public T Delete(int id);
+    public bool Insert(T entity);
+    public bool Update(T entity);
+    public bool Delete(int id);
 }
