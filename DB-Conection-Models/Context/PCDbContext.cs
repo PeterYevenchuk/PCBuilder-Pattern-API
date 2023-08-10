@@ -19,24 +19,66 @@ public class PCDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Foreign key for PC table
-        modelBuilder.Entity<PC>()
-            .HasOne(o => o.PCComponent)
+        modelBuilder.Entity<PCComponent>()
+            .HasOne(c => c.Processor)
             .WithMany()
-            .HasForeignKey("IdComponent")
+            .HasForeignKey(c => c.IdProcessor)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<PCComponent>()
+            .HasOne(c => c.VideoCard)
+            .WithMany()
+            .HasForeignKey(c => c.IdVideoCard)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<PCComponent>()
+            .HasOne(c => c.Motherboard)
+            .WithMany()
+            .HasForeignKey(c => c.IdMotherboard)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<PCComponent>()
+            .HasOne(c => c.SSDM2)
+            .WithMany()
+            .HasForeignKey(c => c.IdSSDM2)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<PCComponent>()
+            .HasOne(c => c.RAM)
+            .WithMany()
+            .HasForeignKey(c => c.IdRAM)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<PCComponent>()
+            .HasOne(c => c.PowerSupply)
+            .WithMany()
+            .HasForeignKey(c => c.IdPowerSupply)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<PCComponent>()
+            .HasOne(c => c.PCCase)
+            .WithMany()
+            .HasForeignKey(c => c.IdPCCase)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<PC>()
+            .HasOne(p => p.PCComponent)
+            .WithOne()
+            .HasForeignKey<PC>(p => p.IdPCComponent)
             .OnDelete(DeleteBehavior.Cascade);
+
         #region AddInfoPCComponent
         modelBuilder.Entity<PCComponent>().HasData(
                 new PCComponent
                 {
                     Id = 1,
-                    Processor = "Amd Ryzen 5 3600",
-                    VideoCard = "NVidia 3080",
-                    Motherboard = "AsRock B550",
-                    SSDM2 = "Sumsung 980gb",
-                    RAM = "HyperX 2x16gb",
-                    PowerSupply = "Asus 600W",
-                    PCCase = "DeapCool"
+                    IdMotherboard = 2,
+                    IdPCCase = 3,
+                    IdPowerSupply = 1,
+                    IdProcessor = 1,
+                    IdRAM = 2,
+                    IdSSDM2 = 3,
+                    IdVideoCard = 1,
                 });
         #endregion
         #region AddInfoPC
@@ -45,7 +87,7 @@ public class PCDbContext : DbContext
             {
                 Id = 1,
                 Name = "Cool Gamer",
-                IdComponent = 1
+                IdPCComponent = 1
             });
         #endregion
         #region AddInfoMotherboard

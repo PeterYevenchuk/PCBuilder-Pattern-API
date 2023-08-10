@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PC-Builder-Decorator-Patterns", "PC-Builder-DecoratorPattern\PC-Builder-Decorator-Patterns.csproj", "{F2DA5883-976A-4591-BBA3-5B85C8D7ECC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PCBuilder-Pattern-API", "PC-Builder-DecoratorPattern\PCBuilder-Pattern-API.csproj", "{F2DA5883-976A-4591-BBA3-5B85C8D7ECC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBL-Conection-Models", "..\DB-Conection-Models\DBL-Conection-Models.csproj", "{C89F391C-D2A4-45DD-A4C1-77CDD4C90B59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBL-Conection-Models", "..\DB-Conection-Models\DBL-Conection-Models.csproj", "{C89F391C-D2A4-45DD-A4C1-77CDD4C90B59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL-Services", "..\BLL-Services\BLL-Services.csproj", "{9E87F93A-0C40-43BE-BEA2-6DCC516120A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL-Services", "..\BLL-Services\BLL-Services.csproj", "{9E87F93A-0C40-43BE-BEA2-6DCC516120A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

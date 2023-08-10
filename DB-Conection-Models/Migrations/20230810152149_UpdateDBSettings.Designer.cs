@@ -4,6 +4,7 @@ using DB_Conection_Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DB_Conection_Models.Migrations
 {
     [DbContext(typeof(PCDbContext))]
-    partial class PCDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230810152149_UpdateDBSettings")]
+    partial class UpdateDBSettings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,14 +115,6 @@ namespace DB_Conection_Models.Migrations
                         .IsUnique();
 
                     b.ToTable("PCs");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IdPCComponent = 1,
-                            Name = "Cool Gamer"
-                        });
                 });
 
             modelBuilder.Entity("DB_Conection_Models.Models.PCCase", b =>
@@ -237,19 +232,6 @@ namespace DB_Conection_Models.Migrations
                     b.HasIndex("IdVideoCard");
 
                     b.ToTable("PCComponents");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IdMotherboard = 2,
-                            IdPCCase = 3,
-                            IdPowerSupply = 1,
-                            IdProcessor = 1,
-                            IdRAM = 2,
-                            IdSSDM2 = 3,
-                            IdVideoCard = 1
-                        });
                 });
 
             modelBuilder.Entity("DB_Conection_Models.Models.PowerSupply", b =>
