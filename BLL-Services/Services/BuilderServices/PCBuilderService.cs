@@ -13,29 +13,27 @@ public class PCBuilderService
         _context = context;
     }
 
-    public async Task<bool> CreateNewPCs(Dictionary<string, PCComponentDBO> pcs)
+    public async Task<bool> CreateNewPCs(string name, PCComponentDBO pcComponent)
     {
         PCBuilder PCBuilder = new();
 
         try
         {
-            foreach (var item in pcs)
-            {
-                var pc = PCBuilder.SetName(item.Key)
+            var pc = PCBuilder.SetName(name)
                 .SetPCComponent(new PCComponent
                 {
-                    IdProcessor = item.Value.IdProcessor,
-                    IdVideoCard = item.Value.IdVideoCard,
-                    IdMotherboard = item.Value.IdMotherboard,
-                    IdSSDM2 = item.Value.IdSSDM2,
-                    IdRAM = item.Value.IdRAM,
-                    IdPowerSupply = item.Value.IdPowerSupply,
-                    IdPCCase = item.Value.IdPCCase
+                    IdProcessor = pcComponent.IdProcessor,
+                    IdVideoCard = pcComponent.IdVideoCard,
+                    IdMotherboard = pcComponent.IdMotherboard,
+                    IdSSDM2 = pcComponent.IdSSDM2,
+                    IdRAM = pcComponent.IdRAM,
+                    IdPowerSupply = pcComponent.IdPowerSupply,
+                    IdPCCase = pcComponent.IdPCCase
                 }).Build();
 
-                _context.PCs.Add(pc);
-                _context.SaveChanges();
-            }
+            _context.PCs.Add(pc);
+            _context.SaveChanges();
+
             return true;
         }
         catch (Exception)

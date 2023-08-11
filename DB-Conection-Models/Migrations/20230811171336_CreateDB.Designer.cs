@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DB_Conection_Models.Migrations
 {
     [DbContext(typeof(PCDbContext))]
-    [Migration("20230810151923_UpdateDB")]
-    partial class UpdateDB
+    [Migration("20230811171336_CreateDB")]
+    partial class CreateDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,7 +111,18 @@ namespace DB_Conection_Models.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdPCComponent")
+                        .IsUnique();
+
                     b.ToTable("PCs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IdPCComponent = 1,
+                            Name = "Cool Gamer"
+                        });
                 });
 
             modelBuilder.Entity("DB_Conection_Models.Models.PCCase", b =>
@@ -229,6 +240,19 @@ namespace DB_Conection_Models.Migrations
                     b.HasIndex("IdVideoCard");
 
                     b.ToTable("PCComponents");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IdMotherboard = 2,
+                            IdPCCase = 3,
+                            IdPowerSupply = 1,
+                            IdProcessor = 1,
+                            IdRAM = 2,
+                            IdSSDM2 = 3,
+                            IdVideoCard = 1
+                        });
                 });
 
             modelBuilder.Entity("DB_Conection_Models.Models.PowerSupply", b =>
@@ -576,35 +600,53 @@ namespace DB_Conection_Models.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DB_Conection_Models.Models.PC", b =>
+                {
+                    b.HasOne("DB_Conection_Models.Models.PCComponent", "PCComponent")
+                        .WithOne()
+                        .HasForeignKey("DB_Conection_Models.Models.PC", "IdPCComponent")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PCComponent");
+                });
+
             modelBuilder.Entity("DB_Conection_Models.Models.PCComponent", b =>
                 {
                     b.HasOne("DB_Conection_Models.Models.Motherboard", "Motherboard")
                         .WithMany()
-                        .HasForeignKey("IdMotherboard");
+                        .HasForeignKey("IdMotherboard")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("DB_Conection_Models.Models.PCCase", "PCCase")
                         .WithMany()
-                        .HasForeignKey("IdPCCase");
+                        .HasForeignKey("IdPCCase")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("DB_Conection_Models.Models.PowerSupply", "PowerSupply")
                         .WithMany()
-                        .HasForeignKey("IdPowerSupply");
+                        .HasForeignKey("IdPowerSupply")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("DB_Conection_Models.Models.Processor", "Processor")
                         .WithMany()
-                        .HasForeignKey("IdProcessor");
+                        .HasForeignKey("IdProcessor")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("DB_Conection_Models.Models.RAM", "RAM")
                         .WithMany()
-                        .HasForeignKey("IdRAM");
+                        .HasForeignKey("IdRAM")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("DB_Conection_Models.Models.SSDM2", "SSDM2")
                         .WithMany()
-                        .HasForeignKey("IdSSDM2");
+                        .HasForeignKey("IdSSDM2")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("DB_Conection_Models.Models.VideoCard", "VideoCard")
                         .WithMany()
-                        .HasForeignKey("IdVideoCard");
+                        .HasForeignKey("IdVideoCard")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Motherboard");
 

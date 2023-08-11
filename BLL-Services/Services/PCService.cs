@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BLL_Services.Services;
 
-public class PCService : IService<PC>
+public class PCService
 {
     private readonly PCDbContext _context;
 
@@ -102,10 +102,5 @@ public class PCService : IService<PC>
         {
             return false;
         }
-    }
-
-    public bool Insert(PC entity)
-    {
-        throw new NotImplementedException();
     }
 }

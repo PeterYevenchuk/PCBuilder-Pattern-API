@@ -7,7 +7,7 @@
 namespace DB_Conection_Models.Migrations
 {
     /// <inheritdoc />
-    public partial class NewDB : Migration
+    public partial class CreateDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,20 +36,6 @@ namespace DB_Conection_Models.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PCCases", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PCs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdPCComponent = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PCs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -129,58 +115,71 @@ namespace DB_Conection_Models.Migrations
                     IdSSDM2 = table.Column<int>(type: "int", nullable: true),
                     IdRAM = table.Column<int>(type: "int", nullable: true),
                     IdPowerSupply = table.Column<int>(type: "int", nullable: true),
-                    IdPCCase = table.Column<int>(type: "int", nullable: true),
-                    ProcessorId = table.Column<int>(type: "int", nullable: false),
-                    VideoCardId = table.Column<int>(type: "int", nullable: false),
-                    MotherboardId = table.Column<int>(type: "int", nullable: false),
-                    SSDM2Id = table.Column<int>(type: "int", nullable: false),
-                    RAMId = table.Column<int>(type: "int", nullable: false),
-                    PowerSupplyId = table.Column<int>(type: "int", nullable: false),
-                    PCCaseId = table.Column<int>(type: "int", nullable: false)
+                    IdPCCase = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PCComponents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PCComponents_Motherboards_MotherboardId",
-                        column: x => x.MotherboardId,
+                        name: "FK_PCComponents_Motherboards_IdMotherboard",
+                        column: x => x.IdMotherboard,
                         principalTable: "Motherboards",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_PCComponents_PCCases_PCCaseId",
-                        column: x => x.PCCaseId,
+                        name: "FK_PCComponents_PCCases_IdPCCase",
+                        column: x => x.IdPCCase,
                         principalTable: "PCCases",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_PCComponents_PowerSupplys_PowerSupplyId",
-                        column: x => x.PowerSupplyId,
+                        name: "FK_PCComponents_PowerSupplys_IdPowerSupply",
+                        column: x => x.IdPowerSupply,
                         principalTable: "PowerSupplys",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_PCComponents_Processors_ProcessorId",
-                        column: x => x.ProcessorId,
+                        name: "FK_PCComponents_Processors_IdProcessor",
+                        column: x => x.IdProcessor,
                         principalTable: "Processors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_PCComponents_RAMs_RAMId",
-                        column: x => x.RAMId,
+                        name: "FK_PCComponents_RAMs_IdRAM",
+                        column: x => x.IdRAM,
                         principalTable: "RAMs",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_PCComponents_SSDM2s_SSDM2Id",
-                        column: x => x.SSDM2Id,
+                        name: "FK_PCComponents_SSDM2s_IdSSDM2",
+                        column: x => x.IdSSDM2,
                         principalTable: "SSDM2s",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_PCComponents_VideoCards_VideoCardId",
-                        column: x => x.VideoCardId,
+                        name: "FK_PCComponents_VideoCards_IdVideoCard",
+                        column: x => x.IdVideoCard,
                         principalTable: "VideoCards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PCs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdPCComponent = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PCs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PCs_PCComponents_IdPCComponent",
+                        column: x => x.IdPCComponent,
+                        principalTable: "PCComponents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -304,50 +303,66 @@ namespace DB_Conection_Models.Migrations
                     { 10, "AMD Radeon RX 6900 XT" }
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_PCComponents_MotherboardId",
+            migrationBuilder.InsertData(
                 table: "PCComponents",
-                column: "MotherboardId");
+                columns: new[] { "Id", "IdMotherboard", "IdPCCase", "IdPowerSupply", "IdProcessor", "IdRAM", "IdSSDM2", "IdVideoCard" },
+                values: new object[] { 1, 2, 3, 1, 1, 2, 3, 1 });
+
+            migrationBuilder.InsertData(
+                table: "PCs",
+                columns: new[] { "Id", "IdPCComponent", "Name" },
+                values: new object[] { 1, 1, "Cool Gamer" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PCComponents_PCCaseId",
+                name: "IX_PCComponents_IdMotherboard",
                 table: "PCComponents",
-                column: "PCCaseId");
+                column: "IdMotherboard");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PCComponents_PowerSupplyId",
+                name: "IX_PCComponents_IdPCCase",
                 table: "PCComponents",
-                column: "PowerSupplyId");
+                column: "IdPCCase");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PCComponents_ProcessorId",
+                name: "IX_PCComponents_IdPowerSupply",
                 table: "PCComponents",
-                column: "ProcessorId");
+                column: "IdPowerSupply");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PCComponents_RAMId",
+                name: "IX_PCComponents_IdProcessor",
                 table: "PCComponents",
-                column: "RAMId");
+                column: "IdProcessor");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PCComponents_SSDM2Id",
+                name: "IX_PCComponents_IdRAM",
                 table: "PCComponents",
-                column: "SSDM2Id");
+                column: "IdRAM");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PCComponents_VideoCardId",
+                name: "IX_PCComponents_IdSSDM2",
                 table: "PCComponents",
-                column: "VideoCardId");
+                column: "IdSSDM2");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PCComponents_IdVideoCard",
+                table: "PCComponents",
+                column: "IdVideoCard");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PCs_IdPCComponent",
+                table: "PCs",
+                column: "IdPCComponent",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PCComponents");
+                name: "PCs");
 
             migrationBuilder.DropTable(
-                name: "PCs");
+                name: "PCComponents");
 
             migrationBuilder.DropTable(
                 name: "Motherboards");

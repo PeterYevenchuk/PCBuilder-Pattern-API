@@ -1,4 +1,5 @@
 ﻿using BLL_Services.Interfaces;
+using BLL_Services.Services;
 using BLL_Services.Services.BuilderServices;
 using DB_Conection_Models.Models;
 using DB_Conection_Models.Models.ModelsDBO;
@@ -11,9 +12,9 @@ namespace PC_Builder_DecoratorPattern.Controllers;
 public class PCController : ControllerBase
 {
     private readonly PCBuilderService _pcBuilderService;
-    private readonly IService<PC> _pcService;
+    private readonly PCService _pcService;
 
-    public PCController(PCBuilderService builderService, IService<PC> pcService)
+    public PCController(PCBuilderService builderService, PCService pcService)
     {
         _pcBuilderService = builderService;
         _pcService = pcService;
@@ -35,9 +36,9 @@ public class PCController : ControllerBase
     }
 
     [HttpPost("save")]
-    public async Task<IActionResult> Insert(Dictionary<string, PCComponentDBO> pcs)
+    public async Task<IActionResult> Insert(string name, PCComponentDBO pcComponent)
     {
-        var result = await _pcBuilderService.CreateNewPCs(pcs);
+        var result = await _pcBuilderService.CreateNewPCs(name, pcComponent);
         if (result) return Ok();
         return BadRequest();
     }
