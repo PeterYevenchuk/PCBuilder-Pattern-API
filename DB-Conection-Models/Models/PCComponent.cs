@@ -1,9 +1,15 @@
 ﻿
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
 namespace DB_Conection_Models.Models;
 
 public class PCComponent
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
+
     public int? IdProcessor { get; set; }
     public int? IdVideoCard { get; set; }
     public int? IdMotherboard { get; set; }

@@ -64,7 +64,11 @@ public class PCDbContext : DbContext
         modelBuilder.Entity<PC>()
             .HasOne(p => p.PCComponent)
             .WithOne()
-            .HasForeignKey<PC>(p => p.IdPCComponent)
+            .HasForeignKey<PC>(p => p.IdPCComponent);
+
+        modelBuilder.Entity<PC>()
+            .HasOne(p => p.PCComponent)
+            .WithOne()
             .OnDelete(DeleteBehavior.Cascade);
 
         #region AddInfoPCComponent
